@@ -1,41 +1,50 @@
+import { Notify } from 'notiflix';
 import { Component } from 'react';
+import { StyledHeader, StyledForm, StyledFormBtn, StyledFormBtnLabel, StyledFormInput } from './Searchbar.styled';
 
 class Searchbar extends Component {
   state = {
-    inputValue: null,
+    inputValue: '',
   };
 
   handleInputChange = ({target}) => {
     this.setState({
-      [target.name]: target.value.toLowerCase().trim(),
+      inputValue: target.value.toLowerCase().trim(),
     })
   };
 
   handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-
-  }
+    if(this.state.inputValue) {
+      this.props.createRequestValue(this.state.inputValue);
+      this.setState({
+        inputValue: '',
+      })
+    } else {
+      Notify.failure('Поіск порожній та треба ввести значення!')
+    };
+    
+  };
 
   render() {
     return (
-      <header className="searchbar">
-        <form className="form" onSubmit={this.handleSubmit}>
-          <button type="submit" className="button">
-            <span className="button-label">Search</span>
-          </button>
+      <StyledHeader>
+        <StyledForm onSubmit={this.handleSubmit}>
+          <StyledFormBtn type="submit">
+            <StyledFormBtnLabel>Search</StyledFormBtnLabel>
+          </StyledFormBtn>
 
-          <input
-            className="input"
+          <StyledFormInput
             type="text"
-            name="inputValue"
             autoComplete="off"
             autoFocus
             placeholder="Search images and photos"
             onChange={this.handleInputChange}
+            value={this.state.inputValue}
           />
-        </form>
-      </header>
+        </StyledForm>
+      </StyledHeader>
     )
 
   }
