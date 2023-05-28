@@ -14,7 +14,8 @@ export class ImageGallery extends Component {
     largeImageURL: '',
     alt: '',
     pageNumber: 1,
-    images: []
+    images: [],
+    isButtonDisabled: false,
   };
 
   componentDidUpdate(prevProps, _) {
@@ -23,7 +24,7 @@ export class ImageGallery extends Component {
         this.setState({
           pageNumber: 1
         });
-        
+
         fetchImage(this.props.inputValue, 1)
           .then((images)=>
           {this.setState({
@@ -34,7 +35,18 @@ export class ImageGallery extends Component {
             Notify.info('Пробачьте, по Вашему запиту нічого не знайдено!')
             this.setState({
               inputValue: '',
-              images: []})
+              images: [],
+              isButtonDisabled: false,
+            })
+          } else if (images.data.hits.length < 12){
+            Notify.info(`по Вашему запиту знайдено ${images.data.hits.length} картинок`)
+            this.setState({
+              isButtonDisabled: false
+            })
+          } else {
+            this.setState({
+              isButtonDisabled: true
+            })
           }
           })
           .catch((error)=>{
@@ -57,7 +69,14 @@ export class ImageGallery extends Component {
     
     fetchImage(this.state.inputValue, pageNumber)
       .then((images)=>
-      {this.setState({
+      {if(images.data.hits.length < 12){
+        Notify.info('Пробачьте, по Вашему запиту більше нічого не знайдено!')
+        this.setState({
+          isButtonDisabled: false
+        })
+        return
+      }
+        this.setState({
         images: [...this.state.images, ...images.data.hits],
       })
       })
@@ -76,7 +95,7 @@ export class ImageGallery extends Component {
 };
 
   render(){
-    const {inputValue, largeImageURL, alt, images} = this.state;
+    const {inputValue, largeImageURL, alt, images, isButtonDisabled} = this.state;
 
     return (
       <>
@@ -92,12 +111,18 @@ export class ImageGallery extends Component {
             </StyledItemGalerry>
           )
         })}
-        {largeImageURL && <Modal 
-        largeImageURL={largeImageURL}
-        alt= {alt}
+        {largeImageURL && 
+        <Modal 
+          largeImageURL={largeImageURL}
+          alt= {alt}
         />}
       </StyledContainerGalerry>
-        {inputValue && <StyledButtonLoad type="button" onClick={this.handlerBtnClick}>Load more</StyledButtonLoad>}
+        {isButtonDisabled && 
+        <StyledButtonLoad 
+          type="button"
+          onClick={this.handlerBtnClick}>
+            Load more
+        </StyledButtonLoad>}
         </>
     )}
   }; 
