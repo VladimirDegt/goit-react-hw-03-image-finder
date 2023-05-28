@@ -4,7 +4,7 @@ import { Notify } from 'notiflix';
 import { fetchImage } from "service/api-pixabay";
 import { StyledContainerGalerry, StyledItemGalerry, StyledImgGalerry, StyledButtonLoad } from "./ImageGallery.styled";
 import { Modal } from "components/Modal/Modal";
-import { Button } from "components/Button/Button";
+// import { Button } from "components/Button/Button";
 
 let spinner = new Spinner();
 
@@ -100,7 +100,8 @@ export class ImageGallery extends Component {
     return (
       <>
       <StyledContainerGalerry>  
-        {inputValue && images.map((item)=>{
+        {inputValue && 
+        images.map((item)=>{
           return (
             <StyledItemGalerry key={item.id}>
               <StyledImgGalerry 

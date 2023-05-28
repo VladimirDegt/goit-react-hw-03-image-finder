@@ -1,6 +1,7 @@
 import { Notify } from 'notiflix';
 import { Component } from 'react';
-import { StyledHeader, StyledForm, StyledFormBtn, StyledFormBtnLabel, StyledFormInput } from './Searchbar.styled';
+import { StyledHeader, StyledForm, StyledFormBtn, StyledFormInput } from './Searchbar.styled';
+import IconSearch from 'service/search-svg';
 
 class Searchbar extends Component {
   state = {
@@ -32,7 +33,7 @@ class Searchbar extends Component {
       <StyledHeader>
         <StyledForm onSubmit={this.handleSubmit}>
           <StyledFormBtn type="submit">
-            <StyledFormBtnLabel>Search</StyledFormBtnLabel>
+            <IconSearch>Search</IconSearch>
           </StyledFormBtn>
 
           <StyledFormInput

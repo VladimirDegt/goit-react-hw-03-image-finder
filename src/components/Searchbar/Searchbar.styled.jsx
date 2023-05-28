@@ -33,7 +33,6 @@ export const StyledFormBtn = styled.button`
   width: 48px;
   height: 48px;
   border: 0;
-  background-image: url('https://image.flaticon.com/icons/svg/149/149852.svg');
   background-size: 40%;
   background-repeat: no-repeat;
   background-position: center;
@@ -46,18 +45,6 @@ export const StyledFormBtn = styled.button`
     opacity: 1;
   }
 `
-export const StyledFormBtnLabel = styled.span`
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  clip-path: inset(50%);
-  border: 0;
-`
-
 export const StyledFormInput = styled.input`
   display: inline-block;
   width: 100%;
@@ -73,3 +60,5 @@ export const StyledFormInput = styled.input`
     font-size: 18px;
   }
 `
+
+
