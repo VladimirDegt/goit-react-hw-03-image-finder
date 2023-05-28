@@ -1,4 +1,5 @@
-import { Component } from "react"
+import { Component } from "react";
+import PropTypes from 'prop-types';
 import { StyledOverlay, StyledImgModal } from "./Modal.styled"
 
 export class Modal extends Component {
@@ -68,4 +69,10 @@ export class Modal extends Component {
     )
   } 
 };
+
+Modal.propTypes = {
+  largeImageURL: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
+};
+
 

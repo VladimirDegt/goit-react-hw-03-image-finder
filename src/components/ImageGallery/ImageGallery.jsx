@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { Spinner } from "spin.js";
 import { Notify } from 'notiflix';
+import PropTypes from 'prop-types';
 import { fetchImage } from "service/api-pixabay";
 import { StyledContainerGalerry, StyledItemGalerry, StyledImgGalerry, StyledButtonLoad } from "./ImageGallery.styled";
 import { Modal } from "components/Modal/Modal";
@@ -128,3 +129,6 @@ export class ImageGallery extends Component {
     )}
   }; 
 
+ImageGallery.propTypes = {
+  inputValue: PropTypes.string.isRequired,
+}

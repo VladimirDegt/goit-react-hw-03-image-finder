@@ -1,5 +1,6 @@
 import { Notify } from 'notiflix';
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 import { StyledHeader, StyledForm, StyledFormBtn, StyledFormInput } from './Searchbar.styled';
 import IconSearch from 'service/search-svg';
 
@@ -51,4 +52,9 @@ class Searchbar extends Component {
   }
 };
 
+Searchbar.propTypes = {
+  createRequestValue: PropTypes.func.isRequired
+}
+
 export default Searchbar;
+
