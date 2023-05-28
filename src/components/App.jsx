@@ -1,8 +1,12 @@
 import { Component } from "react";
+import { Global } from '@emotion/react';
+
 import Searchbar from "./Searchbar";
+import { Spinner } from "./Spinner/Spinner";
+import { ImageGallery } from "./ImageGallery/ImageGallery";
 import { StyledContainer } from "./App.styled";
 import '../styles/spin.css'
-import { ImageGallery } from "./ImageGallery/ImageGallery";
+import { global } from "styles/global-styles";
 
 export class App extends Component {
   state = {
@@ -17,11 +21,14 @@ export class App extends Component {
 
   render() {
     return (
-      <StyledContainer>
-        <Searchbar createRequestValue={this.createRequestValue}/>
-        <div className="centered-element"></div>
-        <ImageGallery inputValue={this.state.inputValue}/>
-      </StyledContainer>
+      <>
+      <Global styles={global}/>
+        <StyledContainer>
+          <Searchbar createRequestValue={this.createRequestValue}/>
+          <Spinner/>
+          <ImageGallery inputValue={this.state.inputValue}/>
+        </StyledContainer>
+      </>
     );
   };
 
