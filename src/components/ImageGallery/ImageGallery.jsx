@@ -22,15 +22,13 @@ export class ImageGallery extends Component {
   componentDidUpdate(prevProps, _) {
     if(prevProps.inputValue !== this.props.inputValue){
         spinner.spin(document.querySelector('.centered-element'))
-        this.setState({
-          pageNumber: 1
-        });
-
-        fetchImage(this.props.inputValue, 1)
+        const pageNumber = 1;
+        fetchImage(this.props.inputValue, pageNumber)
           .then((images)=>
           {this.setState({
             images: images.data.hits,
             inputValue: this.props.inputValue,
+            pageNumber: 2,
           })
           if(images.data.hits.length === 0){
             Notify.info('Пробачьте, по Вашему запиту нічого не знайдено!')
@@ -66,9 +64,8 @@ export class ImageGallery extends Component {
 
   handlerBtnClick = () => {
     if(this.state.inputValue === this.props.inputValue) {
-      const pageNumber = this.state.pageNumber + 1
     
-    fetchImage(this.state.inputValue, pageNumber)
+    fetchImage(this.state.inputValue, this.state.pageNumber)
       .then((images)=>
       {if(images.data.hits.length < 12){
         Notify.info('Пробачьте, по Вашему запиту більше нічого не знайдено!')
@@ -77,9 +74,10 @@ export class ImageGallery extends Component {
         })
         return
       }
-        this.setState({
-        images: [...this.state.images, ...images.data.hits],
-      })
+        this.setState((prevState)=>({
+          images: [...this.state.images, ...images.data.hits],
+          pageNumber: prevState.pageNumber + 1,
+      }))
       })
       .catch((error)=>{
         Notify.failure('Щось пішло не так!')
@@ -87,11 +85,7 @@ export class ImageGallery extends Component {
       })
       .finally(()=>{
         spinner.stop();
-      })
-
-    this.setState({
-      pageNumber,
-    })  
+      }) 
   };
 };
 
