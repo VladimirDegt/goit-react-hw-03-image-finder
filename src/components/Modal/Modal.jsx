@@ -22,8 +22,8 @@ export class Modal extends Component {
     document.removeEventListener('keydown', this.handleEsc);
   };
 
-  componentDidUpdate(prevProps, _) {
-    if(prevProps.largeImageURL !== this.props.largeImageURL){
+  componentDidUpdate(_, prevState) {
+    if(prevState.largeImageURL !== this.props.largeImageURL){
       this.setState({
         isOpen: true,
         largeImageURL: this.props.largeImageURL,

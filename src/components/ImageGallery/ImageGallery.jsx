@@ -110,7 +110,7 @@ export class ImageGallery extends Component {
         {largeImageURL && 
         <Modal 
           largeImageURL={largeImageURL}
-          alt= {alt}
+          alt = {alt}
         />}
       </StyledContainerGalerry>
         {isButtonDisabled && 

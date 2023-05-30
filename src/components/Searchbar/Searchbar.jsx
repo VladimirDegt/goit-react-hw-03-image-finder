@@ -11,7 +11,7 @@ class Searchbar extends Component {
 
   handleInputChange = ({target}) => {
     this.setState({
-      inputValue: target.value.toLowerCase().trim(),
+      inputValue: target.value.toLowerCase(),
     })
   };
 
