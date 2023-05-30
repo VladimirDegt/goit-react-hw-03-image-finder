@@ -92,20 +92,14 @@ export class App extends Component {
 };
 
   render() {
-    const {inputValue, pageNumber, images, isButtonDisabled} = this.state
+    const {images, isButtonDisabled} = this.state
 
     return (
       <>
       <Global styles={global}/>
         <StyledContainer>
           <Searchbar createRequestValue={this.createRequestValue}/>
-          {images &&
-            <ImageGallery 
-            inputValue={inputValue}
-            pageNumber={pageNumber}
-            images={images}
-            />
-          }
+          {images && <ImageGallery images={images}/>}
           {isButtonDisabled && 
             <StyledButtonLoad 
             type="button"

@@ -1,5 +1,5 @@
 import { Component } from "react";
-import PropTypes from 'prop-types';
+import PropTypes, { object } from 'prop-types';
 import { StyledContainerGalerry, StyledItemGalerry, StyledImgGalerry} from "./ImageGallery.styled";
 import { Modal } from "components/Modal/Modal";
 
@@ -8,6 +8,13 @@ export class ImageGallery extends Component {
     largeImageURL: '',
     alt: '',
   };
+
+  clearStateAfterCloseModal = ()=>{
+    this.setState({
+      largeImageURL: '', 
+      alt: '',
+    })
+  }
 
   handlerImgClick = (largeImageURL, alt) => {
     this.setState({largeImageURL, alt})
@@ -28,15 +35,15 @@ export class ImageGallery extends Component {
             </StyledItemGalerry>
           )
         })}
-        {largeImageURL && 
         <Modal 
           largeImageURL={largeImageURL}
           alt = {alt}
-        />}
+          clearStateAfterCloseModal = {this.clearStateAfterCloseModal}
+        />
       </StyledContainerGalerry>
     )}
   }; 
 
 ImageGallery.propTypes = {
-  inputValue: PropTypes.string.isRequired,
+  images: PropTypes.arrayOf(object).isRequired,
 }

@@ -10,11 +10,6 @@ export class Modal extends Component {
   }
 
   componentDidMount() {
-    this.setState({
-      isOpen: true,
-      largeImageURL: this.props.largeImageURL,
-      alt: this.props.alt,
-    })
     document.addEventListener('keydown', this.handleEsc);
   };
 
@@ -23,6 +18,7 @@ export class Modal extends Component {
   };
 
   componentDidUpdate(_, prevState) {
+
     if(prevState.largeImageURL !== this.props.largeImageURL){
       this.setState({
         isOpen: true,
@@ -31,6 +27,7 @@ export class Modal extends Component {
       })
     }
   };
+
 
   handleEsc = (e) => {
     if (e.code === "Escape") {
@@ -51,6 +48,7 @@ export class Modal extends Component {
       largeImageURL: '',
       alt: '',
     });
+    // this.props.clearStateAfterCloseModal();
   };
 
   render() {
