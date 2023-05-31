@@ -1,6 +1,6 @@
 export function scroll() {
   const { height: cardHeight } = document
-    .querySelector(".gallery")
+    .querySelector("ul")
     .firstElementChild.getBoundingClientRect();
   
   window.scrollBy({

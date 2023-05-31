@@ -2,12 +2,19 @@ import { Component } from "react";
 import PropTypes, { object } from 'prop-types';
 import { StyledContainerGalerry, StyledItemGalerry, StyledImgGalerry} from "./ImageGallery.styled";
 import { Modal } from "components/Modal/Modal";
+import { scroll } from "service/scroll-page";
 
 export class ImageGallery extends Component {
   state = {
     largeImageURL: '',
     alt: '',
     isOpen: false,
+  };
+
+  componentDidUpdate(prevProps, prevState){
+    if(this.props.images.length !== 0){
+      scroll()
+    }
   };
 
   handlerImgClick = (largeImageURL, alt) => {
