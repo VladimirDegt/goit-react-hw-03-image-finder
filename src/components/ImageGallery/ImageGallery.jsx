@@ -7,21 +7,24 @@ export class ImageGallery extends Component {
   state = {
     largeImageURL: '',
     alt: '',
+    isOpen: false,
   };
 
-  clearStateAfterCloseModal = ()=>{
-    this.setState({
-      largeImageURL: '', 
-      alt: '',
-    })
-  }
-
   handlerImgClick = (largeImageURL, alt) => {
-    this.setState({largeImageURL, alt})
+    this.setState({
+      largeImageURL,
+      alt,
+      isOpen: true})
+  };
+
+  setFalseOpenModal = () =>{
+    this.setState({
+      isOpen: false
+    })
   };
 
   render(){
-    const {largeImageURL, alt} = this.state;
+    const {largeImageURL, alt, isOpen} = this.state;
     return (
       <StyledContainerGalerry>  
         {this.props.images.map((item)=>{
@@ -35,15 +38,17 @@ export class ImageGallery extends Component {
             </StyledItemGalerry>
           )
         })}
-        <Modal 
-          largeImageURL={largeImageURL}
+        {isOpen && <Modal 
+          largeImageURL = {largeImageURL}
           alt = {alt}
-          clearStateAfterCloseModal = {this.clearStateAfterCloseModal}
-        />
+          isOpen = {isOpen}
+          setFalseOpenModal ={this.setFalseOpenModal}
+        />}
       </StyledContainerGalerry>
     )}
   }; 
 
 ImageGallery.propTypes = {
   images: PropTypes.arrayOf(object).isRequired,
+  isOpen: PropTypes.bool.isRequired,
 }

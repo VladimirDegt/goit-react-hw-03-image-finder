@@ -99,7 +99,7 @@ export class App extends Component {
       <Global styles={global}/>
         <StyledContainer>
           <Searchbar createRequestValue={this.createRequestValue}/>
-          {images && <ImageGallery images={images}/>}
+          {images && <ImageGallery images={images} isOpen={false}/>}
           {isButtonDisabled && 
             <StyledButtonLoad 
             type="button"
@@ -111,5 +111,4 @@ export class App extends Component {
       </>
     );
   };
-
 };

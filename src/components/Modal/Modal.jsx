@@ -5,12 +5,13 @@ import { StyledOverlay, StyledImgModal } from "./Modal.styled"
 export class Modal extends Component {
   state = {
     isOpen: false,
-    largeImageURL: '',
-    alt: '',
   }
 
   componentDidMount() {
     document.addEventListener('keydown', this.handleEsc);
+    this.setState({
+      isOpen: true,
+    })
   };
 
   componentWillUnmount() {
@@ -18,16 +19,12 @@ export class Modal extends Component {
   };
 
   componentDidUpdate(_, prevState) {
-
-    if(prevState.largeImageURL !== this.props.largeImageURL){
+    if(prevState.isOpen !== this.props.isOpen){
       this.setState({
         isOpen: true,
-        largeImageURL: this.props.largeImageURL,
-        alt: this.props.alt,
       })
     }
   };
-
 
   handleEsc = (e) => {
     if (e.code === "Escape") {
@@ -45,21 +42,19 @@ export class Modal extends Component {
   closeModal = () => {
     this.setState({ 
       isOpen: false,
-      largeImageURL: '',
-      alt: '',
     });
-    // this.props.clearStateAfterCloseModal();
+    this.props.setFalseOpenModal()
   };
 
   render() {
-    const {isOpen, largeImageURL, alt} = this.state;
+    const {isOpen} = this.state;
 
     return (
       <>
       {isOpen && 
         <StyledOverlay onClick={this.handleClickBackdrop}>
         <StyledImgModal >
-          <img src={largeImageURL} alt={alt} />
+          <img src={this.props.largeImageURL} alt={this.props.alt} />
         </StyledImgModal>
       </StyledOverlay>
       }
@@ -71,6 +66,8 @@ export class Modal extends Component {
 Modal.propTypes = {
   largeImageURL: PropTypes.string.isRequired,
   alt: PropTypes.string.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  setFalseOpenModal: PropTypes.func.isRequired,
 };
 
 
