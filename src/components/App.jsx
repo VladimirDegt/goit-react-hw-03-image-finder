@@ -2,13 +2,12 @@ import { Component } from "react";
 import { Global } from '@emotion/react';
 import { Notify } from 'notiflix';
 import Searchbar from "./Searchbar";
-import { Spinner } from "./Spinner/Spinner";
 import { fetchImage } from "service/api-pixabay";
 import { ImageGallery } from "./ImageGallery/ImageGallery";
 import { StyledContainer, StyledButtonLoad  } from "./App.styled";
 import '../styles/spin.css'
 import { global } from "styles/global-styles";
-import { startSpinner, stopSpinner } from "service/api-spinner";
+import { Spinner } from "./Spinner/Spinner";
 
 export class App extends Component {
   state = {
@@ -16,12 +15,14 @@ export class App extends Component {
     pageNumber: '',
     images: '',
     isButtonDisabled: false,
+    isLoading: false,
   };
 
   componentDidUpdate(_, prevState){
     if(prevState.inputValue !== this.state.inputValue){
-      startSpinner();
-
+      this.setState({
+        isLoading: true,
+      })
       fetchImage(this.state.inputValue, this.state.pageNumber)
       .then((images)=>{
 
@@ -38,7 +39,6 @@ export class App extends Component {
             pageNumber: 1,
             isButtonDisabled: false,
           })
-          stopSpinner()
           return
         }
 
@@ -55,7 +55,9 @@ export class App extends Component {
         console.log(error)
       })
       .finally(()=>{
-        stopSpinner()
+        this.setState({
+          isLoading: false,
+        })
       })
     }
   };
@@ -68,7 +70,9 @@ export class App extends Component {
   };
 
   handlerBtnClick = () => {
-    startSpinner()
+    this.setState({
+      isLoading: true,
+    })
     fetchImage(this.state.inputValue, this.state.pageNumber)
       .then((images)=>{
       this.setState((prevState)=>({
@@ -87,18 +91,21 @@ export class App extends Component {
         console.log(error)
       })
       .finally(()=>{
-        stopSpinner()
+        this.setState({
+          isLoading: false,
+        })
       }) 
 };
 
   render() {
-    const {images, isButtonDisabled} = this.state
+    const {images, isButtonDisabled, isLoading} = this.state
 
     return (
       <>
       <Global styles={global}/>
         <StyledContainer>
           <Searchbar createRequestValue={this.createRequestValue}/>
+          {isLoading && <Spinner/>}
           {images && <ImageGallery images={images} isOpen={false}/>}
           {isButtonDisabled && 
             <StyledButtonLoad 
@@ -107,7 +114,6 @@ export class App extends Component {
             Load more
             </StyledButtonLoad>}
         </StyledContainer>
-        <Spinner/>
       </>
     );
   };
